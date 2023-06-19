@@ -1,26 +1,56 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import { useState } from "react";
-import { Form, Link } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Form, Link, useNavigate } from "react-router-dom";
+import { loginRoute } from "../utils/api";
+import { useSnackbar } from "notistack";
 
 function Login() {
+  const navigater = useNavigate();
   const [values, setValues] = useState({
-    email: "",
+    userName: "",
     password: "",
   });
+
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      navigater("/");
+    }
+  }, []);
   const handleEventChange = (e) => {
     const { name, value } = e.target;
     setValues((prev) => ({ ...prev, [name]: value }));
   };
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    const { userName, password } = values;
+    axios
+      .post(loginRoute, {
+        userName,
+        password,
+      })
+      .then(({ data }) => {
+        if (data) {
+          localStorage.setItem("user", JSON.stringify(data?.user));
+          navigater("/");
+        }
+      })
+      .catch(({ response }) => {
+        console.log({ response });
+        enqueueSnackbar(response?.data?.msg, {
+          variant: "error",
+          preventDuplicate: true,
+        });
+      });
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container>
+      <Grid container height="100vh">
         <Grid item xs={12} md={6}>
-          <Box component="img" src="bg.png" width="100vh" height="100vh" />
+          <Box component="img" src="bg.png" width="100%" height="100%" />
         </Grid>
         <Grid item xs={12} md={6}>
           <Box
@@ -29,7 +59,7 @@ function Login() {
             justifyContent="center"
             flexDirection="column"
             gap={2}
-            height="100vh"
+            height="100%"
           >
             <Box component="img" src="logo.png" height="100px" />
             <Box fontWeight="bold" fontSize="20px">
@@ -44,9 +74,9 @@ function Login() {
                   gap={2}
                 >
                   <TextField
-                    id="email"
-                    name="email"
-                    label="Email"
+                    id="username"
+                    name="userName"
+                    label="UserName"
                     onChange={(e) => handleEventChange(e)}
                   />
                   <TextField
