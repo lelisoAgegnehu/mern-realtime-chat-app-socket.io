@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import morgan from "morgan";
+import userRoute from "./routes/user.js";
 
 //setup
 dotenv.config();
@@ -10,6 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("common"));
+app.use("/api/auth", userRoute);
 
 // MONGOOSE CONFIGURATION
 const PORT = process.env.PORT || 5001;
