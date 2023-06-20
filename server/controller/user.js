@@ -46,3 +46,19 @@ export const loginUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const setAvatar = async (req, res, next) => {
+  try {
+    const { image } = req.body;
+    const userId = req.params.id;
+    console.log(userId);
+    const user = await User.findByIdAndUpdate(userId, {
+      isAvatarImageSet: true,
+      avatarImage: image,
+    });
+
+    res.status(200).json({ user });
+  } catch (error) {
+    next(error);
+  }
+};
