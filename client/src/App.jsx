@@ -17,7 +17,7 @@ function App() {
       <Route path="/">
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/setAvator" element={<SetAvator />} />
+        <Route path="/setAvatar" element={<SetAvator />} />
         <Route path="/" element={<Chat />} />
       </Route>
     )
