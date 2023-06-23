@@ -1,4 +1,11 @@
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Form, Link, useNavigate } from "react-router-dom";
@@ -46,8 +53,13 @@ function Login() {
         });
       });
   };
+  const theme = useTheme();
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box
+      sx={{ flexGrow: 1 }}
+      color={theme.palette.secondary.light}
+      bgcolor={theme.palette.primary.dark}
+    >
       <Grid container height="100vh">
         <Grid item xs={12} md={6}>
           <Box component="img" src="bg.png" width="100%" height="100%" />
