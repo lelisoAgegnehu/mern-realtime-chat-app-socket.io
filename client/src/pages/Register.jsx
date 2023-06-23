@@ -1,4 +1,11 @@
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { Form, Link, useNavigate } from "react-router-dom";
@@ -53,6 +60,7 @@ function Register() {
     const { name, value } = e.target;
     setValues((prev) => ({ ...prev, [name]: value }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (handleValidation()) {
@@ -77,8 +85,14 @@ function Register() {
         });
     }
   };
+
+  const theme = useTheme();
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box
+      sx={{ flexGrow: 1 }}
+      color={theme.palette.secondary.light}
+      bgcolor={theme.palette.primary.dark}
+    >
       <Grid container height="100vh">
         <Grid item xs={12} md={6} sm={12}>
           <Box component="img" src="bg.png" width="100%" height="100%" />
